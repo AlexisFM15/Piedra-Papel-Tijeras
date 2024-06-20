@@ -1,68 +1,136 @@
 
-// console.log(boxTop);
-// console.log(boxBottom);
-// console.log(boxLeft);
-// console.log(boxRight);
+let piedra = {
+    src: "rock.png",
+    alt: "imagen 1",
+    direccionX: "derecha" || "izquierda",
+    direccionY: "arriba" || "abajo",
+    width: 50,
+    step: 5,
+    y: 0,
+    x: 0,
+  };
 
-// imgpiedra.style.top = "0px";
-// imgpiedra.style.bottom = "0px";
-// imgpiedra.style.left = "0px";
-// imgpiedra.style.right = "0px";
 
-// // move on X forward
-// function moveFoward() {
-//   return (piedra.x += piedra.step);
-// }
 
-// function moveBackward() {
-//   return (piedra.x -= piedra.step);
-// }
+console.log(boxTop);
+console.log(boxBottom);
+console.log(boxLeft);
+console.log(boxRight);
 
-// //move on Y up
-// function moveUp() {
-//   return (piedra.y -= piedra.step);
-// }
+imgpiedra.style.top = "0px";
+imgpiedra.style.bottom = "0px";
+imgpiedra.style.left = "0px";
+imgpiedra.style.right = "0px";
 
-// //move on Y down
-// function moveDown() {
-//   return (piedra.y += piedra.step);
-// }
+// move on X forward
+function moveFoward() {
+  return (piedra.x += piedra.step);
+}
 
-// //Change the y's direction
-// function getDirectionY() {
-//   if (piedra.y > boxBottom) {
-//     piedra.direccionY = "abajo";
-//   } else if (piedra.y < -boxBottom) {
-//     piedra.direccionY = "arriba";
-//   }
-// }
+function moveBackward() {
+  return (piedra.x -= piedra.step);
+}
 
-// //Change the x's direction
-// function getDirectionX() {
-//   if (piedra.x > boxRight) {
-//     piedra.direccionX = "izquierda";
-//   } else if (piedra.x < -boxRight) {
-//     piedra.direccionX = "derecha";
-//   }
-// }
+//move on Y up
+function moveUp() {
+  return (piedra.y -= piedra.step);
+}
 
-// // complete elements' movement
-// function movement() {
-//   getDirectionX();
-//   getDirectionY();
-//   if (piedra.direccionX === "derecha" && piedra.direccionY === "arriba") {
-//     imgpiedra.style.transform = `translate(${moveFoward()}px,${moveDown()}px)`;
-//   } else if (
-//     piedra.direccionX === "izquierda" &&
-//     piedra.direccionY === "arriba"
-//   ) {
-//     imgpiedra.style.transform = `translate(${moveBackward()}px,${moveDown()}px)`;
-//   } else if (piedra.direccionX === "derecha" && piedra.direccionY === "abajo") {
-//     imgpiedra.style.transform = `translate(${moveFoward()}px,${moveUp()}px)`;
-//   } else if (
-//     piedra.direccionX === "izquierda" &&
-//     piedra.direccionY === "abajo"
-//   ) {
-//     imgpiedra.style.transform = `translate(${moveBackward()}px,${moveUp()}px )`;
-//   }
-// }
+//move on Y down
+function moveDown() {
+  return (piedra.y += piedra.step);
+}
+
+//Change the y's direction
+function getDirectionY() {
+  if (piedra.y > boxBottom) {
+    piedra.direccionY = "abajo";
+  } else if (piedra.y < -boxBottom) {
+    piedra.direccionY = "arriba";
+  }
+}
+
+//Change the x's direction
+function getDirectionX() {
+  if (piedra.x > boxRight) {
+    piedra.direccionX = "izquierda";
+  } else if (piedra.x < -boxRight) {
+    piedra.direccionX = "derecha";
+  }
+}
+
+// complete elements' movement
+function movement() {
+  getDirectionX();
+  getDirectionY();
+  if (piedra.direccionX === "derecha" && piedra.direccionY === "arriba") {
+    imgpiedra.style.transform = `translate(${moveFoward()}px,${moveDown()}px)`;
+  } else if (
+    piedra.direccionX === "izquierda" &&
+    piedra.direccionY === "arriba"
+  ) {
+    imgpiedra.style.transform = `translate(${moveBackward()}px,${moveDown()}px)`;
+  } else if (piedra.direccionX === "derecha" && piedra.direccionY === "abajo") {
+    imgpiedra.style.transform = `translate(${moveFoward()}px,${moveUp()}px)`;
+  } else if (
+    piedra.direccionX === "izquierda" &&
+    piedra.direccionY === "abajo"
+  ) {
+    imgpiedra.style.transform = `translate(${moveBackward()}px,${moveUp()}px )`;
+  }
+}
+
+
+
+
+function moveFoward() {
+  return (nepiedra.x += nepiedra.step);
+}
+// move on X backward
+function moveBackward() {
+  return (nepiedra.x -= nepiedra.step);
+}
+//move on Y up
+function moveUp() {
+  return (nepiedra.y -= nepiedra.step);
+}
+
+function moveDown() {
+  return (nepiedra.y += nepiedra.step);
+}
+//Change the y's direction
+function getDirectionY() {
+  if (nepiedra.y > boxBottom) {
+    return nepiedra.direccionY = "abajo";
+  } else if (nepiedra.y < -boxBottom) {
+    return nepiedra.direccionY = "arriba";
+  }
+}
+//Change the x's direction
+function getDirectionX() {
+  if (nepiedra.x > boxRight) {
+    return nepiedra.direccionX = "izquierda";
+  } else if (nepiedra.x < -boxRight) {
+    return nepiedra.direccionX = "derecha";
+  }
+}
+function movement() {
+  getDirectionX();
+  getDirectionY();
+  if (nepiedra.direccionX === "derecha" && nepiedra.direccionY === "arriba") {
+   return nepiedra.node.style.transform = `translate(${moveFoward()}px,${moveDown()}px)`;
+  } else if (
+    nepiedra.direccionX === "izquierda" &&
+    nepiedra.direccionY === "arriba"
+  ) {
+    return nepiedra.node.style.transform = `translate(${moveBackward()}px,${moveDown()}px)`;
+  } else if (nepiedra.direccionX === "derecha" && nepiedra.direccionY === "abajo") {
+    return nepiedra.node.style.transform = `translate(${moveFoward()}px,${moveUp()}px)`;
+  } else if (
+    nepiedra.direccionX === "izquierda" &&
+    nepiedra.direccionY === "abajo"
+  ) {
+    return nepiedra.node.style.transform = `translate(${moveBackward()}px,${moveUp()}px )`;
+  }
+}
+

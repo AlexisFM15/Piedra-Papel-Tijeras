@@ -13,8 +13,6 @@ body {
     height: 100vh;
     margin: 0;
     background-color: black;
-
-
 }
 
 .Board{
@@ -33,5 +31,5 @@ body {
     width: 50px;
     margin: auto;
     position: absolute;
-    
+    inset: 0px;
 }
