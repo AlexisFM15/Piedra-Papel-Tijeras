@@ -1,0 +1,68 @@
+
+// console.log(boxTop);
+// console.log(boxBottom);
+// console.log(boxLeft);
+// console.log(boxRight);
+
+// imgpiedra.style.top = "0px";
+// imgpiedra.style.bottom = "0px";
+// imgpiedra.style.left = "0px";
+// imgpiedra.style.right = "0px";
+
+// // move on X forward
+// function moveFoward() {
+//   return (piedra.x += piedra.step);
+// }
+
+// function moveBackward() {
+//   return (piedra.x -= piedra.step);
+// }
+
+// //move on Y up
+// function moveUp() {
+//   return (piedra.y -= piedra.step);
+// }
+
+// //move on Y down
+// function moveDown() {
+//   return (piedra.y += piedra.step);
+// }
+
+// //Change the y's direction
+// function getDirectionY() {
+//   if (piedra.y > boxBottom) {
+//     piedra.direccionY = "abajo";
+//   } else if (piedra.y < -boxBottom) {
+//     piedra.direccionY = "arriba";
+//   }
+// }
+
+// //Change the x's direction
+// function getDirectionX() {
+//   if (piedra.x > boxRight) {
+//     piedra.direccionX = "izquierda";
+//   } else if (piedra.x < -boxRight) {
+//     piedra.direccionX = "derecha";
+//   }
+// }
+
+// // complete elements' movement
+// function movement() {
+//   getDirectionX();
+//   getDirectionY();
+//   if (piedra.direccionX === "derecha" && piedra.direccionY === "arriba") {
+//     imgpiedra.style.transform = `translate(${moveFoward()}px,${moveDown()}px)`;
+//   } else if (
+//     piedra.direccionX === "izquierda" &&
+//     piedra.direccionY === "arriba"
+//   ) {
+//     imgpiedra.style.transform = `translate(${moveBackward()}px,${moveDown()}px)`;
+//   } else if (piedra.direccionX === "derecha" && piedra.direccionY === "abajo") {
+//     imgpiedra.style.transform = `translate(${moveFoward()}px,${moveUp()}px)`;
+//   } else if (
+//     piedra.direccionX === "izquierda" &&
+//     piedra.direccionY === "abajo"
+//   ) {
+//     imgpiedra.style.transform = `translate(${moveBackward()}px,${moveUp()}px )`;
+//   }
+// }
