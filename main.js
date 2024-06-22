@@ -18,10 +18,14 @@ class element {
   constructor(src, alt) {
     this.src = src;
     this.alt = alt;
-    this.x = Math.floor(Math.random()*100);
-    this.y = Math.floor(Math.random()*100);
-    this.direccionX =Math.floor(Math.random()*100) > 50 ? "derecha" : "izquierda" 
-    this.direccionY = Math.floor(Math.random()*100) > 50 ? "arriba" : "abajo" ;
+    this.x =0 
+    // Math.floor(Math.random()*100);
+    this.y = 0
+    // Math.floor(Math.random()*100);
+    this.direccionX = 'derecha'
+    // Math.floor(Math.random()*100) > 50 ? "derecha" : "izquierda" 
+    this.direccionY = 'arriba'
+    // Math.floor(Math.random()*100) > 50 ? "arriba" : "abajo" ;
     this.createDomElement();
   }
 
@@ -95,15 +99,29 @@ class element {
     }
   }
 }
-//
-const tijera = new element("tijera.png", "tijera");
-caja.appendChild(tijera.node);
-const piedra = new element("rock.png", "piedra");
-caja.appendChild(piedra.node);
 
+//Creating elements
+let tijera = new element("tijera.png", "tijera");
+
+let piedra = new element("rock.png", "piedra");
+
+let papel = new element("paper.png", "papel");
+caja.appendChild(tijera.node);
+  caja.appendChild(piedra.node);
+// convert trade
+function convert(){
+  if (piedra.x === tijera.x && piedra.y === tijera.y )
+    {
+      console.log('change')
+      return tijera.src = piedra.src 
+    }
+}
 
 //start button
 boton.addEventListener("click", () => {
+  
+  setInterval(function () { convert();}, 25 )
   setInterval(function () { tijera.movement(); },25)
   setInterval(function () { piedra.movement(); },25)
+  setInterval(function () { papel.movement(); },25)
 });
