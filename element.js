@@ -1,21 +1,10 @@
-const caja = document.getElementById("Board");
-const boton = document.getElementById("boton");
-
-// const imgpiedra = document.getElementById("rock");
-
-// getting box's dimensions
-let boxTop = caja.offsetTop;
-let boxBottom = caja.offsetHeight / 2.3;
-let boxLeft = caja.offsetLeft;
-let boxRight = window.outerWidth - caja.offsetWidth;
-
-class element {
+export class element {
   id;
   src;
   alt;
   tipo = "piedra" || "papel" || "tijeras";
   width = `25px`;
-  step = 10;
+  step = 5;
   node;
 
   constructor(tipo, caja, id) {
@@ -92,39 +81,38 @@ class element {
     }
   }
 
-  checkCollisions(element) {
+  hitboxElement(enemy, ally) {
+    let leftSide = enemy.offsetLeft;
+    let topSide = enemy.offsetTop;
+    let bottomSide = topSide + enemy.node.height;
+    let rightSide = leftSide + enemy.node.width;
+  }
+
+  changeTheValue(element) {
     for (let i = 0; i < element.length; i++) {
       if (
-      (this.x >= element[i].x &&
-        this.x <= element[i].x + 50) &&
-        (this.y >= element[i].y &&
-        this.y <= element[i].y + 50)
+        element[i].node.offsetLeft === this.node.offsetLeft ||
+        element[i].node.offsetTop === this.node.offsetTop
       ) {
         if (element[i].tipo === "piedra" && this.tipo === "tijera") {
-          this.tipo = "piedra";
-          this.node.src = "rock.png";
+          this.node.src = element[i].src;
+          this.tipo = element[i].tipo;
           console.log("tijera a piedra");
-          this.step +=5;
-          continue
-             
+          break;
         } else if (element[i].tipo === "tijera" && this.tipo === "papel") {
-          this.tipo = 'tijera';
-          this.node.src = "tijera.png"
+          this.node.src = element[i].src;
+          this.tipo = element[i].tipo;
           console.log("papel a tijera");
-          this.step-= 5;
-         continue
-          
+          break;
         } else if (element[i].tipo === "papel" && this.tipo === "piedra") {
-          this.tipo = "papel";
-          this.node.src = "paper.png";
-          console.log("papel a piedra");
-          this.step+=5;
-         continue         
+          this.node.src = element[i].src;
+          this.tipo = element[i].tipo;
+          console.log("piedra a tijera");
+          break;
         }
-      } 
+      }
     }
   }
- 
   // make the element bounce
   movement(element) {
     this.getDirectionX();
@@ -141,49 +129,6 @@ class element {
     } else if (this.direccionX === "izquierda" && this.direccionY === "abajo") {
       this.node.style.transform = `translate(${this.moveBackward()}px,${this.moveUp()}px )`;
     }
-    this.checkCollisions(element);
+    this.changeTheValue(element);
   }
 }
-
-//Creating elements
-let elements = [
-  new element("piedra", caja, 1),
-  new element("tijera", caja, 2),
-  new element("papel", caja, 3),
-  new element("piedra", caja, 4),
-  new element("tijera", caja, 5),
-  new element("papel", caja, 6),
-  new element("piedra", caja, 7),
-  new element("tijera", caja, 8),
-  new element("papel", caja, 9),
-  new element("piedra", caja, 10),
-  new element("tijera", caja, 11),
-  new element("papel", caja, 12),
-  new element("piedra", caja, 13),
-  new element("tijera", caja, 14),
-  new element("papel", caja, 15),
-];
-
-function winCondition(elements, intervalo) {
-  let firstElement = elements[0].tipo
-  let check = (ele) => ele.tipo === firstElement
-  if (elements.every(check) === true) {
-    clearInterval(intervalo)
-    return true
-  }
-  return false
-}
-
-function handlerMove(ele){
-  for (let i = 0; i < ele.length; i++) {
-    let intervalo = setInterval(() => {
-      ele[i].movement(ele);
-      winCondition(ele, intervalo)
-    }, 100);
-  }
-}
-
-//start button
-boton.addEventListener("click", _=>handlerMove(elements))
-
-
