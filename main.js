@@ -1,189 +1,25 @@
-const caja = document.getElementById("Board");
+import elementTemplate from "./element.js";
+import box, { handlerMove } from "./board.js";
 const boton = document.getElementById("boton");
-
-// const imgpiedra = document.getElementById("rock");
-
-// getting box's dimensions
-let boxTop = caja.offsetTop;
-let boxBottom = caja.offsetHeight / 2.3;
-let boxLeft = caja.offsetLeft;
-let boxRight = window.outerWidth - caja.offsetWidth;
-
-class element {
-  id;
-  src;
-  alt;
-  tipo = "piedra" || "papel" || "tijeras";
-  width = `25px`;
-  step = 10;
-  node;
-
-  constructor(tipo, caja, id) {
-    this.id = id;
-    this.elementChoices(tipo);
-    this.tipo = tipo;
-    this.alt = "elemt";
-    this.x = Math.floor(Math.random() * 100);
-    this.y = Math.floor(Math.random() * 100);
-    this.direccionX =
-      Math.floor(Math.random() * 1000) > 500 ? "derecha" : "izquierda";
-    this.direccionY =
-      Math.floor(Math.random() * 1000) > 500 ? "arriba" : "abajo";
-    this.createDomElement(caja);
-  }
-
-  elementChoices(tipo) {
-    if (tipo === "piedra") {
-      return (this.src = "rock.png");
-    }
-    if (tipo === "tijera") {
-      return (this.src = "tijera.png");
-    }
-    if (tipo === "papel") {
-      return (this.src = "paper.png");
-    }
-  }
-
-  createDomElement(caja) {
-    const element1 = document.createElement("img");
-    element1.style.top = "250px";
-    element1.style.bottom = "0px";
-    element1.style.right = "0px";
-    element1.style.left = "445px";
-    element1.style.width = this.width;
-    element1.src = this.src;
-    element1.alt = this.alt;
-    element1.style.position = "absolute";
-    caja.appendChild(element1);
-    return (this.node = element1);
-  }
-
-  moveFoward() {
-    return (this.x += this.step);
-  }
-
-  // move on X backward
-  moveBackward() {
-    return (this.x -= this.step);
-  }
-
-  //move on Y up
-  moveUp() {
-    return (this.y -= this.step);
-  }
-
-  moveDown() {
-    return (this.y += this.step);
-  }
-  //Change the y's direction
-  getDirectionY() {
-    if (this.y > boxBottom) {
-      this.direccionY = "abajo";
-    } else if (this.y < -boxBottom) {
-      this.direccionY = "arriba";
-    }
-  }
-  //Change the x's direction
-  getDirectionX() {
-    if (this.x > boxRight) {
-      this.direccionX = "izquierda";
-    } else if (this.x < -boxRight) {
-      this.direccionX = "derecha";
-    }
-  }
-
-  checkCollisions(element) {
-    for (let i = 0; i < element.length; i++) {
-      if (
-      (this.x >= element[i].x &&
-        this.x <= element[i].x + 50) &&
-        (this.y >= element[i].y &&
-        this.y <= element[i].y + 50)
-      ) {
-        if (element[i].tipo === "piedra" && this.tipo === "tijera") {
-          this.tipo = "piedra";
-          this.node.src = "rock.png";
-          console.log("tijera a piedra");
-          this.step +=5;
-          continue
-             
-        } else if (element[i].tipo === "tijera" && this.tipo === "papel") {
-          this.tipo = 'tijera';
-          this.node.src = "tijera.png"
-          console.log("papel a tijera");
-          this.step-= 5;
-         continue
-          
-        } else if (element[i].tipo === "papel" && this.tipo === "piedra") {
-          this.tipo = "papel";
-          this.node.src = "paper.png";
-          console.log("papel a piedra");
-          this.step+=5;
-         continue         
-        }
-      } 
-    }
-  }
- 
-  // make the element bounce
-  movement(element) {
-    this.getDirectionX();
-    this.getDirectionY();
-    if (this.direccionX === "derecha" && this.direccionY === "arriba") {
-      this.node.style.transform = `translate(${this.moveFoward()}px,${this.moveDown()}px)`;
-    } else if (
-      this.direccionX === "izquierda" &&
-      this.direccionY === "arriba"
-    ) {
-      this.node.style.transform = `translate(${this.moveBackward()}px,${this.moveDown()}px)`;
-    } else if (this.direccionX === "derecha" && this.direccionY === "abajo") {
-      this.node.style.transform = `translate(${this.moveFoward()}px,${this.moveUp()}px)`;
-    } else if (this.direccionX === "izquierda" && this.direccionY === "abajo") {
-      this.node.style.transform = `translate(${this.moveBackward()}px,${this.moveUp()}px )`;
-    }
-    this.checkCollisions(element);
-  }
-}
 
 //Creating elements
 let elements = [
-  new element("piedra", caja, 1),
-  new element("tijera", caja, 2),
-  new element("papel", caja, 3),
-  new element("piedra", caja, 4),
-  new element("tijera", caja, 5),
-  new element("papel", caja, 6),
-  new element("piedra", caja, 7),
-  new element("tijera", caja, 8),
-  new element("papel", caja, 9),
-  new element("piedra", caja, 10),
-  new element("tijera", caja, 11),
-  new element("papel", caja, 12),
-  new element("piedra", caja, 13),
-  new element("tijera", caja, 14),
-  new element("papel", caja, 15),
+  new elementTemplate("piedra", box, 1),
+  new elementTemplate("tijera", box, 2),
+  new elementTemplate("papel", box, 3),
+  new elementTemplate("piedra", box, 4),
+  new elementTemplate("tijera", box, 5),
+  new elementTemplate("papel", box, 6),
+  new elementTemplate("piedra", box, 7),
+  new elementTemplate("tijera", box, 8),
+  new elementTemplate("papel", box, 9),
+  new elementTemplate("piedra", box, 10),
+  new elementTemplate("tijera", box, 11),
+  new elementTemplate("papel", box, 12),
+  new elementTemplate("piedra", box, 13),
+  new elementTemplate("tijera", box, 14),
+  new elementTemplate("papel", box, 15),
 ];
 
-function winCondition(elements, intervalo) {
-  let firstElement = elements[0].tipo
-  let check = (ele) => ele.tipo === firstElement
-  if (elements.every(check) === true) {
-    clearInterval(intervalo)
-    return true
-  }
-  return false
-}
-
-function handlerMove(ele){
-  for (let i = 0; i < ele.length; i++) {
-    let intervalo = setInterval(() => {
-      ele[i].movement(ele);
-      winCondition(ele, intervalo)
-    }, 100);
-  }
-}
-
 //start button
-boton.addEventListener("click", _=>handlerMove(elements))
-
-
+boton.addEventListener("click",_ => handlerMove(elements));

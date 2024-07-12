@@ -1,52 +1,51 @@
-export class element {
-  id;
+import { boxBottom, boxRight } from "./board.js";
+import { getRandomOpcion, ELEMNTS_TYPES, ELEMENTS_SOURCES } from "./utils.js";
+
+export default class elementTemplate {
   src;
-  alt;
-  tipo = "piedra" || "papel" || "tijeras";
+  tipo = ELEMNTS_TYPES.PIEDRA || ELEMNTS_TYPES.PAPEL || ELEMNTS_TYPES.TIJERA;
   width = `25px`;
-  step = 5;
+  step = 10;
   node;
 
-  constructor(tipo, caja, id) {
+  constructor(tipo, box, id) {
     this.id = id;
     this.elementChoices(tipo);
     this.tipo = tipo;
     this.alt = "elemt";
-    this.x = Math.floor(Math.random() * 100);
-    this.y = Math.floor(Math.random() * 100);
-    this.direccionX =
-      Math.floor(Math.random() * 1000) > 500 ? "derecha" : "izquierda";
-    this.direccionY =
-      Math.floor(Math.random() * 1000) > 500 ? "arriba" : "abajo";
-    this.createDomElement(caja);
+    this.x = getRandomOpcion();
+    this.y = getRandomOpcion();
+    this.direccionX = getRandomOpcion() > 50 ? "derecha" : "izquierda";
+    this.direccionY = getRandomOpcion() > 50 ? "arriba" : "abajo";
+    this.createDomElement(box);
   }
 
   elementChoices(tipo) {
-    if (tipo === "piedra") {
-      return (this.src = "rock.png");
+    if (tipo === ELEMNTS_TYPES.PIEDRA) {
+      return (this.src = ELEMENTS_SOURCES.PIEDRASOURCE);
     }
-    if (tipo === "tijera") {
-      return (this.src = "tijera.png");
+    if (tipo === ELEMNTS_TYPES.TIJERA) {
+      return (this.src = ELEMENTS_SOURCES.TIJERASOURCE);
     }
-    if (tipo === "papel") {
-      return (this.src = "paper.png");
+    if (tipo === ELEMNTS_TYPES.PAPEL) {
+      return (this.src = ELEMENTS_SOURCES.PAPELSOURCE);
     }
   }
 
-  createDomElement(caja) {
-    const element1 = document.createElement("img");
-    element1.style.top = "250px";
-    element1.style.bottom = "0px";
-    element1.style.right = "0px";
-    element1.style.left = "445px";
-    element1.style.width = this.width;
-    element1.src = this.src;
-    element1.alt = this.alt;
-    element1.style.position = "absolute";
-    caja.appendChild(element1);
-    return (this.node = element1);
+  createDomElement(box) {
+    const elementNode = document.createElement("img");
+    elementNode.style.top = "250px";
+    elementNode.style.bottom = "0px";
+    elementNode.style.right = "0px";
+    elementNode.style.left = "445px";
+    elementNode.style.width = this.width;
+    elementNode.src = this.src;
+    elementNode.alt = this.alt;
+    elementNode.style.position = "absolute";
+    box.appendChild(elementNode);
+    return (this.node = elementNode);
   }
-
+  // move on X forward
   moveFoward() {
     return (this.x += this.step);
   }
@@ -60,7 +59,7 @@ export class element {
   moveUp() {
     return (this.y -= this.step);
   }
-
+  //move on Y down
   moveDown() {
     return (this.y += this.step);
   }
@@ -81,38 +80,43 @@ export class element {
     }
   }
 
-  hitboxElement(enemy, ally) {
-    let leftSide = enemy.offsetLeft;
-    let topSide = enemy.offsetTop;
-    let bottomSide = topSide + enemy.node.height;
-    let rightSide = leftSide + enemy.node.width;
-  }
-
-  changeTheValue(element) {
+  checkCollisions(element) {
     for (let i = 0; i < element.length; i++) {
       if (
-        element[i].node.offsetLeft === this.node.offsetLeft ||
-        element[i].node.offsetTop === this.node.offsetTop
+        this.x >= element[i].x &&
+        this.x <= element[i].x + 50 &&
+        this.y >= element[i].y &&
+        this.y <= element[i].y + 50
       ) {
-        if (element[i].tipo === "piedra" && this.tipo === "tijera") {
-          this.node.src = element[i].src;
-          this.tipo = element[i].tipo;
-          console.log("tijera a piedra");
-          break;
-        } else if (element[i].tipo === "tijera" && this.tipo === "papel") {
-          this.node.src = element[i].src;
-          this.tipo = element[i].tipo;
-          console.log("papel a tijera");
-          break;
-        } else if (element[i].tipo === "papel" && this.tipo === "piedra") {
-          this.node.src = element[i].src;
-          this.tipo = element[i].tipo;
-          console.log("piedra a tijera");
-          break;
+        if (
+          element[i].tipo === ELEMNTS_TYPES.PIEDRA &&
+          this.tipo === ELEMNTS_TYPES.TIJERA
+        ) {
+          this.tipo = ELEMNTS_TYPES.PIEDRA;
+          this.node.src = ELEMENTS_SOURCES.PIEDRASOURCE;
+          this.step += 5;
+          continue;
+        } else if (
+          element[i].tipo === ELEMNTS_TYPES.TIJERA &&
+          this.tipo === ELEMNTS_TYPES.PAPEL
+        ) {
+          this.tipo = ELEMNTS_TYPES.TIJERA;
+          this.node.src = ELEMENTS_SOURCES.TIJERASOURCE;
+          this.step -= 5;
+          continue;
+        } else if (
+          element[i].tipo === ELEMNTS_TYPES.PAPEL &&
+          this.tipo === ELEMNTS_TYPES.PIEDRA
+        ) {
+          this.tipo = ELEMNTS_TYPES.PAPEL;
+          this.node.src = ELEMENTS_SOURCES.PAPELSOURCE;
+          this.step += 5;
+          continue;
         }
       }
     }
   }
+
   // make the element bounce
   movement(element) {
     this.getDirectionX();
@@ -129,6 +133,6 @@ export class element {
     } else if (this.direccionX === "izquierda" && this.direccionY === "abajo") {
       this.node.style.transform = `translate(${this.moveBackward()}px,${this.moveUp()}px )`;
     }
-    this.changeTheValue(element);
+    this.checkCollisions(element);
   }
 }
