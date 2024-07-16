@@ -1,25 +1,19 @@
 import elementTemplate from "./element.js";
 import box, { handlerMove } from "./board.js";
+import { ELEMNTS_TYPES } from "./utils.js";
 const boton = document.getElementById("boton");
 
-//Creating elements
-let elements = [
-  new elementTemplate("piedra", box, 1),
-  new elementTemplate("tijera", box, 2),
-  new elementTemplate("papel", box, 3),
-  new elementTemplate("piedra", box, 4),
-  new elementTemplate("tijera", box, 5),
-  new elementTemplate("papel", box, 6),
-  new elementTemplate("piedra", box, 7),
-  new elementTemplate("tijera", box, 8),
-  new elementTemplate("papel", box, 9),
-  new elementTemplate("piedra", box, 10),
-  new elementTemplate("tijera", box, 11),
-  new elementTemplate("papel", box, 12),
-  new elementTemplate("piedra", box, 13),
-  new elementTemplate("tijera", box, 14),
-  new elementTemplate("papel", box, 15),
-];
+//creating elements by a loop 
+function createElement(quantity) {
+  const element = [];
+  const values = Object.values(ELEMNTS_TYPES);
+  const valuesLength = values.length
+  for (let i = 0; i < quantity; i++) {
+    const randomIndex = Math.floor(Math.random() * valuesLength);
+    element.push(new elementTemplate(values[randomIndex],box,i));
+  }
+  return element
+}
 
-//start button
-boton.addEventListener("click",_ => handlerMove(elements));
+//start the game
+boton.addEventListener("click", (_) => handlerMove(createElement(40)));

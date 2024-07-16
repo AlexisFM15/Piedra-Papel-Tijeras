@@ -2,16 +2,15 @@ const box = document.getElementById("Board");
 const jsConfetti = new JSConfetti();
 
 // getting box's dimensions
-let boxTop = box.offsetTop;
-export let boxBottom = box.offsetHeight / 2.3;
-let boxLeft = box.offsetLeft;
-export let boxRight = window.outerWidth - box.offsetWidth;
+
+export const boxBottom = box.offsetHeight / 2.3;
+export const boxRight = window.outerWidth - box.offsetWidth;
 
 function celebration() {
   jsConfetti.addConfetti({
     emojis: ["🎉", "🥳", "👏", "⚡", "🎈"],
     emojiSize: 30,
-    confettiNumber: 30,
+    confettiNumber: 50,
     confettiColors: [
       "#ff0a54",
       "#ff477e",
@@ -25,21 +24,21 @@ function celebration() {
 
 //when whole elements have the same type
 function winCondition(elementsSet, intervalID) {
-  let firstElement = elementsSet[0].tipo;
-  let check = (ele) => ele.tipo === firstElement;
+  const firstElement = elementsSet[0].tipo;
+  const check = (el) => el.tipo === firstElement;
   if (elementsSet.every(check) === true) {
     clearInterval(intervalID);
     celebration();
   }
 }
 
-export function handlerMove(ele) {
-    for (let i = 0; i < ele.length; i++) {
-      let intervalo = setInterval(() => {
-        ele[i].movement(ele);
-        winCondition(ele, intervalo);
-      }, 100);
-    }
+export function handlerMove(el) {
+  for (const element of el) {
+    const intervalo = setInterval(() => {
+      element.movement(el);
+      winCondition(el, intervalo);
+    }, 100);
   }
+}
 
 export default box;
